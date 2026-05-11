@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="HW Tracker">
+<meta name="theme-color" content="#ff4e00">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>🚗 Hot Wheels Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #0f0c29, #1a0533, #24243e);
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    color: #fff;
+    display: flex; flex-direction: column;
+    height: 100dvh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(90deg, #ff4e00, #ec9f05);
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(255,78,0,0.4);
+    flex-shrink: 0;
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header h1 { font-size: 18px; letter-spacing: 3px; }
+  .header p { font-size: 9px; font-family: sans-serif; color: rgba(255,255,255,0.85); letter-spacing: 1px; }
+  .saved-badge { font-size: 10px; font-family: sans-serif; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity .4s; white-space: nowrap; }
+  .saved-badge.show { opacity: 1; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; padding: 10px 12px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+  .stat { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 4px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+  .stat.profit { border-color: rgba(74,222,128,0.35); }
+  .stat.loss   { border-color: rgba(248,113,113,0.35); }
+  .stat-icon  { font-size: 14px; }
+  .stat-val   { font-size: 14px; font-weight: bold; }
+  .stat-val.small { font-size: 9px; }
+  .stat-val.green { color: #4ade80; }
+  .stat-val.red   { color: #f87171; }
+  .stat-label { font-size: 7px; font-family: sans-serif; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+  /* Tabs */
+  .tabs { display: flex; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 0 16px; flex-shrink: 0; }
+  .tab { flex: 1; padding: 11px 0; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 12px; font-family: 'Impact','Arial Black',sans-serif; letter-spacing: 2px; border-bottom: 2px solid transparent; cursor: pointer; margin-bottom: -2px; }
+  .tab.active { color: #ff4e00; border-bottom-color: #ff4e00; }
+
+  /* Scrollable content */
+  .content { flex: 1; overflow-y: auto; padding: 14px; padding-bottom: max(20px, env(safe-area-inset-bottom)); -webkit-overflow-scrolling: touch; }
+
+  /* Buttons */
+  .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 14px; font-family: 'Impact','Arial Black',sans-serif; letter-spacing: 2px; cursor: pointer; margin-bottom: 12px; }
+  .btn-orange { background: #ff4e00; color: #fff; }
+  .btn-yellow { background: linear-gradient(90deg,#ec9f05,#f5c518); color: #000; }
+  .btn-green  { background: #4ade80; color: #000; }
+  .btn-ghost  { background: rgba(255,255,255,0.1); color: #fff; }
+  .btn-row    { display: flex; gap: 8px; margin-top: 8px; }
+  .btn-row .btn { margin-bottom: 0; }
+
+  /* Modal */
+  .modal { background: rgba(15,12,41,0.98); border: 1px solid rgba(255,78,0,0.3); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 0 30px rgba(255,78,0,0.2); }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .modal-title  { font-size: 14px; letter-spacing: 2px; color: #ff4e00; }
+  .modal-close  { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; }
+
+  /* Form */
+  label { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.5); letter-spacing: 1px; display: block; margin-bottom: 4px; }
+  input, select {
+    width: 100%; padding: 11px 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px; color: #fff;
+    font-size: 16px; /* prevent zoom on iOS */
+    font-family: sans-serif;
+    margin-bottom: 10px; outline: none;
+    appearance: none; -webkit-appearance: none;
+  }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23fff' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+  select option { background: #1a0533; }
+
+  /* Hints */
+  .hint { border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 12px; font-family: sans-serif; }
+  .hint-orange { background: rgba(255,78,0,0.12); color: #ffa07a; }
+  .hint-green  { background: rgba(74,222,128,0.1); color: #4ade80; }
+  .hint-red    { background: rgba(248,113,113,0.1); color: #f87171; }
+
+  /* Car card */
+  .car-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 13px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+  .car-progress { position: absolute; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#ff4e00,#ec9f05); }
+  .car-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .car-name { font-size: 16px; letter-spacing: 1px; }
+  .car-meta { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .sell-btn { background: linear-gradient(90deg,#ff4e00,#ec9f05); border: none; border-radius: 8px; padding: 7px 14px; color: #000; font-size: 12px; font-family: 'Impact',sans-serif; letter-spacing: 1px; cursor: pointer; flex-shrink: 0; }
+  .car-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: 12px; }
+  .car-stat { text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 6px 2px; }
+  .car-stat-val   { font-size: 13px; font-weight: bold; }
+  .car-stat-label { font-size: 8px; font-family: sans-serif; color: rgba(255,255,255,0.4); }
+  .profit-line { margin-top: 8px; font-size: 11px; font-family: sans-serif; }
+
+  /* Sale item */
+  .sale-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .sale-name  { font-size: 15px; letter-spacing: 1px; }
+  .sale-meta  { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .sale-amt   { font-size: 14px; white-space: nowrap; }
+  .sale-lbl   { font-size: 10px; font-family: sans-serif; color: rgba(255,255,255,0.4); text-align: right; }
+
+  /* Mode buttons */
+  .mode-block { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 14px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.1); }
+  .mode-block-title { font-size: 14px; letter-spacing: 2px; margin-bottom: 8px; }
+  .mode-row { display: flex; gap: 8px; }
+  .mode-btn { flex: 1; padding: 10px 8px; border: none; border-radius: 10px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); font-size: 11px; font-family: sans-serif; font-weight: bold; cursor: pointer; line-height: 1.5; }
+  .mode-btn.active { background: linear-gradient(90deg,#ff4e00,#ec9f05); color: #000; }
+
+  /* Price table */
+  .price-table { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); margin-top: 20px; }
+  .price-table-title { font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; color: #ec9f05; }
+  .price-section { margin-bottom: 14px; }
+  .price-section-lbl { font-size: 12px; font-family: sans-serif; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .price-cell { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 7px 4px; text-align: center; }
+  .price-pct { font-size: 11px; color: #4ade80; font-family: sans-serif; font-weight: bold; }
+  .price-val { font-size: 11px; font-family: sans-serif; }
+
+  .empty { text-align: center; padding: 50px 0; color: rgba(255,255,255,0.3); font-family: sans-serif; font-size: 14px; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <span style="font-size:26px">🚗</span>
+    <div>
+      <h1>HOT WHEELS TRACKER</h1>
+      <p>QUẢN LÝ MUA BÁN · THỐNG KÊ LỜI LỖ</p>
+    </div>
+  </div>
+  <div class="saved-badge" id="savedBadge">💾 Đã lưu</div>
+</div>
+
+<div class="stats" id="statsBar"></div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('inventory')">📦 KHO</button>
+  <button class="tab" onclick="switchTab('sales')">💰 BÁN</button>
+  <button class="tab" onclick="switchTab('add')">➕ NHẬP</button>
+</div>
+
+<div class="content" id="content"></div>
+
+<script>
+const DEFAULT_PRICE = 69000;
+const SERIES = ["Mainline","Premium","Super Treasure Hunt","Treasure Hunt","Car Culture","Khác"];
+
+let cars  = JSON.parse(localStorage.getItem('hw_cars')  || '[]');
+let sales = JSON.parse(localStorage.getItem('hw_sales') || '[]');
+let currentTab = 'inventory';
+let batchMode  = false;
+
+function fmt(n) { return Number(n).toLocaleString('vi-VN') + 'đ'; }
+
+function persist() {
+  localStorage.setItem('hw_cars',  JSON.stringify(cars));
+  localStorage.setItem('hw_sales', JSON.stringify(sales));
+  const b = document.getElementById('savedBadge');
+  b.classList.add('show');
+  clearTimeout(b._t);
+  b._t = setTimeout(() => b.classList.remove('show'), 1500);
+}
+
+// ── Computed ──────────────────────────────────────────────────
+function getInventory() {
+  const map = {};
+  cars.forEach(c => { map[c.id] = {...c, sold:0, revenue:0}; });
+  sales.forEach(s => {
+    if (map[s.carId]) { map[s.carId].sold += s.qty; map[s.carId].revenue += s.qty * s.pricePerUnit; }
+  });
+  return Object.values(map).map(c => ({
+    ...c,
+    remaining: c.qty - c.sold,
+    cost: c.qty * c.costPerUnit,
+    profit: c.revenue - c.sold * c.costPerUnit,
+  }));
+}
+
+function getStats() {
+  const inv = getInventory();
+  return {
+    totalCars:   inv.reduce((a,c)=>a+c.qty,0),
+    totalSold:   inv.reduce((a,c)=>a+c.sold,0),
+    totalCost:   inv.reduce((a,c)=>a+c.cost,0),
+    totalProfit: inv.reduce((a,c)=>a+c.profit,0),
+  };
+}
+
+// ── Stats bar ─────────────────────────────────────────────────
+function renderStats() {
+  const s = getStats();
+  const ip = s.totalProfit >= 0;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat"><div class="stat-icon">📦</div><div class="stat-val">${s.totalCars}</div><div class="stat-label">TỔNG XE</div></div>
+    <div class="stat"><div class="stat-icon">✅</div><div class="stat-val">${s.totalSold}</div><div class="stat-label">ĐÃ BÁN</div></div>
+    <div class="stat"><div class="stat-icon">💸</div><div class="stat-val small">${fmt(s.totalCost)}</div><div class="stat-label">VỐN BỎ RA</div></div>
+    <div class="stat ${ip?'profit':'loss'}"><div class="stat-icon">${ip?'📈':'📉'}</div><div class="stat-val small ${ip?'green':'red'}">${fmt(Math.abs(s.totalProfit))}</div><div class="stat-label">${ip?'LỜI':'LỖ'}</div></div>`;
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['inventory','sales','add'][i] === tab);
+  });
+  render();
+}
+
+function render() {
+  renderStats();
+  if      (currentTab === 'inventory') renderInventory();
+  else if (currentTab === 'sales')     renderSales();
+  else                                  renderAdd();
+}
+
+// ── Inventory tab ─────────────────────────────────────────────
+function renderInventory() {
+  const inv = getInventory();
+  if (!inv.length) {
+    document.getElementById('content').innerHTML = '<div class="empty">🚗<br>Chưa có xe nào.<br>Vào tab ➕ NHẬP để thêm!</div>';
+    return;
+  }
+  document.getElementById('content').innerHTML = inv.map(car => {
+    const pct     = car.qty > 0 ? (car.sold/car.qty)*100 : 0;
+    const profPct = car.sold > 0 ? Math.round((car.profit/(car.sold*car.costPerUnit))*100) : null;
+    return `
+    <div class="car-card">
+      <div class="car-progress" style="width:${pct}%"></div>
+      <div class="car-top">
+        <div style="flex:1;margin-right:8px">
+          <div class="car-name">${esc(car.name)}</div>
+          <div class="car-meta">${esc(car.series)} · ${car.addedAt} · vốn ${fmt(car.costPerUnit)}/con</div>
+        </div>
+        ${car.remaining > 0 ? `<button class="sell-btn" onclick="openSellModal('${car.id}')">BÁN</button>` : ''}
+      </div>
+      <div class="car-stats">
+        <div class="car-stat"><div class="car-stat-val">${car.qty}</div><div class="car-stat-label">NHẬP</div></div>
+        <div class="car-stat"><div class="car-stat-val" style="color:${car.remaining===0?'#f87171':'#fff'}">${car.remaining}</div><div class="car-stat-label">CÒN</div></div>
+        <div class="car-stat"><div class="car-stat-val">${car.sold}</div><div class="car-stat-label">ĐÃ BÁN</div></div>
+        <div class="car-stat"><div class="car-stat-val" style="color:${car.profit>=0?'#4ade80':'#f87171'};font-size:11px">${fmt(car.profit)}</div><div class="car-stat-label">LỜI/LỖ</div></div>
+      </div>
+      ${profPct !== null ? `<div class="profit-line" style="color:${profPct>=0?'#4ade80':'#f87171'}">${profPct>=0?'📈':'📉'} Biên lợi nhuận: ${profPct>=0?'+':''}${profPct}%${car.remaining>0?` <span style="color:rgba(255,255,255,0.4)">· ${car.remaining} con chưa bán</span>`:''}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ── Sales tab ─────────────────────────────────────────────────
+function renderSales() {
+  const salesHtml = !sales.length ? '<div class="empty">💰<br>Chưa có giao dịch nào.</div>' :
+    [...sales].reverse().map(s => {
+      const car    = cars.find(c => c.id === s.carId);
+      const profit = (s.pricePerUnit - (car?.costPerUnit || DEFAULT_PRICE)) * s.qty;
+      return `
+      <div class="sale-item">
+        <div style="flex:1;min-width:0">
+          <div class="sale-name">${esc(car?.name||'?')}</div>
+          <div class="sale-meta">${s.soldAt} · x${s.qty} · ${fmt(s.pricePerUnit)}/con${s.note?' · '+esc(s.note):''}</div>
+        </div>
+        <div>
+          <div class="sale-amt" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}${fmt(profit)}</div>
+          <div class="sale-lbl">lời/lỗ</div>
+        </div>
+      </div>`;
+    }).join('');
+
+  document.getElementById('content').innerHTML =
+    `<button class="btn btn-orange" onclick="openSellModal()">+ GHI NHẬN BÁN MỚI</button>
+     <div id="sellModal"></div>
+     ${salesHtml}`;
+}
+
+let _sellCarId = '';
+
+function openSellModal(carId) {
+  _sellCarId = carId || '';
+  if (currentTab !== 'sales') { switchTab('sales'); setTimeout(() => openSellModal(carId), 60); return; }
+
+  const inv  = getInventory();
+  const avail = inv.filter(c => c.remaining > 0);
+  const opts  = avail.map(c =>
+    `<option value="${c.id}" ${c.id===_sellCarId?'selected':''}>${esc(c.name)} (${esc(c.series)}) — còn ${c.remaining}</option>`
+  ).join('');
+
+  document.getElementById('sellModal').innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">GHI NHẬN BÁN XE</span>
+        <button class="modal-close" onclick="closeSellModal()">✕</button>
+      </div>
+      <label>Chọn xe *</label>
+      <select id="sCarId" onchange="onSellCarChange()">
+        <option value="">-- Chọn xe --</option>${opts}
+      </select>
+      <div id="sellHint"></div>
+      <label>Số lượng</label>
+      <input type="number" id="sQty" value="1" min="1" inputmode="numeric">
+      <label>Giá bán mỗi con (đ) *</label>
+      <input type="number" id="sPrice" placeholder="VD: 120000" inputmode="numeric" oninput="onSellPriceChange()">
+      <div id="profitHint"></div>
+      <label>Kênh bán</label>
+      <input type="text" id="sNote" placeholder="Facebook, Shopee, Zalo...">
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="confirmSale()">XÁC NHẬN BÁN</button>
+        <button class="btn btn-ghost" onclick="closeSellModal()">HỦY</button>
+      </div>
+    </div>`;
+
+  if (_sellCarId) onSellCarChange();
+}
+
+function onSellCarChange() {
+  _sellCarId = document.getElementById('sCarId').value;
+  const inv = getInventory();
+  const car = inv.find(c => c.id === _sellCarId);
+  const el  = document.getElementById('sellHint');
+  if (!car) { el.innerHTML = ''; return; }
+  const sug = Math.ceil(car.costPerUnit * 1.4 / 1000) * 1000;
+  el.innerHTML = `<div class="hint hint-orange">💡 Giá vốn: ${fmt(car.costPerUnit)} · Gợi ý ≥${fmt(sug)} để lời ~40%</div>`;
+  onSellPriceChange();
+}
+
+function onSellPriceChange() {
+  const inv   = getInventory();
+  const car   = inv.find(c => c.id === (document.getElementById('sCarId')?.value||''));
+  const price = Number(document.getElementById('sPrice')?.value||0);
+  const qty   = Number(document.getElementById('sQty')?.value||1);
+  const el    = document.getElementById('profitHint');
+  if (!car || !price) { el.innerHTML=''; return; }
+  const profit = (price - car.costPerUnit) * qty;
+  el.innerHTML = `<div class="hint ${profit>=0?'hint-green':'hint-red'}">${profit>=0?'✅':'❌'} Lời/Lỗ dự tính: ${profit>=0?'+':''}${fmt(profit)}</div>`;
+}
+
+function closeSellModal() {
+  const el = document.getElementById('sellModal');
+  if (el) el.innerHTML = '';
+}
+
+function confirmSale() {
+  const carId = document.getElementById('sCarId').value;
+  const qty   = Number(document.getElementById('sQty').value) || 1;
+  const price = Number(document.getElementById('sPrice').value);
+  const note  = document.getElementById('sNote').value.trim();
+  if (!carId || !price) { alert('Vui lòng chọn xe và nhập giá bán!'); return; }
+  const inv = getInventory();
+  const car = inv.find(c => c.id === carId);
+  if (!car || car.remaining < qty) { alert('Không đủ hàng trong kho!'); return; }
+  sales.push({ id: Date.now().toString(), carId, qty, pricePerUnit: price, note, soldAt: new Date().toLocaleDateString('vi-VN') });
+  persist();
+  closeSellModal();
+  render();
+}
+
+// ── Add tab ───────────────────────────────────────────────────
+function renderAdd() {
+  const eCost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
+  const priceSections = [
+    {label:'Lẻ siêu thị', cost:DEFAULT_PRICE},
+    {label:'Mua 5 tặng 2', cost:Math.round(DEFAULT_PRICE*5/7)},
+  ].map(row => `
+    <div class="price-section">
+      <div class="price-section-lbl">Giá vốn (${row.label}): ${fmt(row.cost)}</div>
+      <div class="price-grid">
+        ${[30,50,80,100,150,200].map(pct => {
+          const sell = Math.ceil(row.cost*(1+pct/100)/1000)*1000;
+          return `<div class="price-cell"><div class="price-pct">+${pct}%</div><div class="price-val">${fmt(sell)}</div></div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('content').innerHTML = `
+    <div class="mode-block">
+      <div class="mode-block-title">🏷️ CHẾ ĐỘ MUA</div>
+      <div class="mode-row">
+        <button class="mode-btn ${!batchMode?'active':''}" onclick="setMode(false)">1 con = ${fmt(DEFAULT_PRICE)}</button>
+        <button class="mode-btn ${batchMode?'active':''}" onclick="setMode(true)">Mua 5 tặng 2<br>≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con</button>
+      </div>
+    </div>
+    <button class="btn btn-yellow" onclick="openAddCarModal()">+ THÊM XE MỚI VÀO KHO</button>
+    <div id="addCarModal"></div>
+    <div class="price-table">
+      <div class="price-table-title">📊 BẢNG GIÁ GỢI Ý BÁN</div>
+      ${priceSections}
+    </div>`;
+}
+
+function setMode(batch) { batchMode = batch; renderAdd(); }
+
+function openAddCarModal() {
+  const eCost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
+  document.getElementById('addCarModal').innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">NHẬP XE MỚI</span>
+        <button class="modal-close" onclick="closeAddCarModal()">✕</button>
+      </div>
+      <label>Tên xe *</label>
+      <input type="text" id="cName" placeholder="VD: Ferrari 250 GTO" autocomplete="off">
+      <label>Dòng xe</label>
+      <select id="cSeries">${SERIES.map(s=>`<option>${s}</option>`).join('')}</select>
+      <label>Số lượng nhập</label>
+      <input type="number" id="cQty" value="1" min="1" inputmode="numeric">
+      <label>Giá vốn mỗi con (đ)</label>
+      <input type="number" id="cCost" value="${eCost}" inputmode="numeric">
+      <div class="hint hint-orange">${batchMode
+        ? `💡 Mua 5 tặng 2: ${fmt(DEFAULT_PRICE*5)} / 7 con ≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con`
+        : `💡 Giá lẻ siêu thị: ${fmt(DEFAULT_PRICE)}/con`}
+      </div>
+      <label>Ghi chú</label>
+      <input type="text" id="cNote" placeholder="Nguồn, ngày nhập..." autocomplete="off">
+      <div class="btn-row">
+        <button class="btn btn-yellow" onclick="confirmAddCar()">LƯU VÀO KHO</button>
+        <button class="btn btn-ghost" onclick="closeAddCarModal()">HỦY</button>
+      </div>
+    </div>`;
+
+  setTimeout(() => document.getElementById('cName')?.focus(), 100);
+}
+
+function closeAddCarModal() {
+  const el = document.getElementById('addCarModal');
+  if (el) el.innerHTML = '';
+}
+
+function confirmAddCar() {
+  const name = document.getElementById('cName').value.trim();
+  if (!name) { alert('Vui lòng nhập tên xe!'); return; }
+  const cost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
+  cars.push({
+    id: Date.now().toString(),
+    name,
+    series:      document.getElementById('cSeries').value,
+    qty:         Number(document.getElementById('cQty').value) || 1,
+    costPerUnit: Number(document.getElementById('cCost').value) || cost,
+    note:        document.getElementById('cNote').value.trim(),
+    addedAt:     new Date().toLocaleDateString('vi-VN'),
+  });
+  persist();
+  closeAddCarModal();
+  render();
+}
+
+// ── Utils ─────────────────────────────────────────────────────
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Service Worker ────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+
+// ── Init ──────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
