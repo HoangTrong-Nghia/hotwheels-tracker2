@@ -20,8 +20,6 @@
     display: flex; flex-direction: column;
     height: 100dvh;
   }
-
-  /* Header */
   .header {
     background: linear-gradient(90deg, #ff4e00, #ec9f05);
     padding: 12px 16px;
@@ -35,91 +33,77 @@
   .header p { font-size: 9px; font-family: sans-serif; color: rgba(255,255,255,0.85); letter-spacing: 1px; }
   .saved-badge { font-size: 10px; font-family: sans-serif; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 20px; opacity: 0; transition: opacity .4s; white-space: nowrap; }
   .saved-badge.show { opacity: 1; }
-
-  /* Stats */
   .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; padding: 10px 12px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
   .stat { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 4px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
   .stat.profit { border-color: rgba(74,222,128,0.35); }
   .stat.loss   { border-color: rgba(248,113,113,0.35); }
-  .stat-icon  { font-size: 14px; }
-  .stat-val   { font-size: 14px; font-weight: bold; }
+  .stat-icon { font-size: 14px; }
+  .stat-val  { font-size: 14px; font-weight: bold; }
   .stat-val.small { font-size: 9px; }
   .stat-val.green { color: #4ade80; }
   .stat-val.red   { color: #f87171; }
   .stat-label { font-size: 7px; font-family: sans-serif; color: rgba(255,255,255,0.5); margin-top: 1px; }
-
-  /* Tabs */
   .tabs { display: flex; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 0 16px; flex-shrink: 0; }
   .tab { flex: 1; padding: 11px 0; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 12px; font-family: 'Impact','Arial Black',sans-serif; letter-spacing: 2px; border-bottom: 2px solid transparent; cursor: pointer; margin-bottom: -2px; }
   .tab.active { color: #ff4e00; border-bottom-color: #ff4e00; }
-
-  /* Scrollable content */
   .content { flex: 1; overflow-y: auto; padding: 14px; padding-bottom: max(20px, env(safe-area-inset-bottom)); -webkit-overflow-scrolling: touch; }
-
-  /* Buttons */
   .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 14px; font-family: 'Impact','Arial Black',sans-serif; letter-spacing: 2px; cursor: pointer; margin-bottom: 12px; }
   .btn-orange { background: #ff4e00; color: #fff; }
   .btn-yellow { background: linear-gradient(90deg,#ec9f05,#f5c518); color: #000; }
   .btn-green  { background: #4ade80; color: #000; }
   .btn-ghost  { background: rgba(255,255,255,0.1); color: #fff; }
+  .btn-red    { background: rgba(248,113,113,0.18); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+  .btn-blue   { background: rgba(96,165,250,0.18); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
   .btn-row    { display: flex; gap: 8px; margin-top: 8px; }
   .btn-row .btn { margin-bottom: 0; }
-
-  /* Modal */
   .modal { background: rgba(15,12,41,0.98); border: 1px solid rgba(255,78,0,0.3); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 0 30px rgba(255,78,0,0.2); }
   .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .modal-title  { font-size: 14px; letter-spacing: 2px; color: #ff4e00; }
   .modal-close  { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; }
-
-  /* Form */
   label { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.5); letter-spacing: 1px; display: block; margin-bottom: 4px; }
   input, select {
     width: 100%; padding: 11px 12px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 10px; color: #fff;
-    font-size: 16px; /* prevent zoom on iOS */
-    font-family: sans-serif;
+    font-size: 16px; font-family: sans-serif;
     margin-bottom: 10px; outline: none;
     appearance: none; -webkit-appearance: none;
   }
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23fff' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
   select option { background: #1a0533; }
-
-  /* Hints */
   .hint { border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 12px; font-family: sans-serif; }
   .hint-orange { background: rgba(255,78,0,0.12); color: #ffa07a; }
   .hint-green  { background: rgba(74,222,128,0.1); color: #4ade80; }
   .hint-red    { background: rgba(248,113,113,0.1); color: #f87171; }
-
-  /* Car card */
   .car-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 13px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08); position: relative; overflow: hidden; }
   .car-progress { position: absolute; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#ff4e00,#ec9f05); }
-  .car-top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .car-name { font-size: 16px; letter-spacing: 1px; }
+  .car-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+  .car-name { font-size: 15px; letter-spacing: 1px; }
   .car-meta { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.45); margin-top: 2px; }
-  .sell-btn { background: linear-gradient(90deg,#ff4e00,#ec9f05); border: none; border-radius: 8px; padding: 7px 14px; color: #000; font-size: 12px; font-family: 'Impact',sans-serif; letter-spacing: 1px; cursor: pointer; flex-shrink: 0; }
+  .car-actions { display: flex; gap: 5px; flex-shrink: 0; }
+  .sell-btn { background: linear-gradient(90deg,#ff4e00,#ec9f05); border: none; border-radius: 8px; padding: 7px 10px; color: #000; font-size: 11px; font-family: 'Impact',sans-serif; letter-spacing: 1px; cursor: pointer; }
+  .icon-btn { border: none; border-radius: 8px; padding: 7px 9px; font-size: 15px; cursor: pointer; }
+  .edit-btn { background: rgba(96,165,250,0.15); border: 1px solid rgba(96,165,250,0.3); }
+  .del-btn  { background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3); }
   .car-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: 12px; }
   .car-stat { text-align: center; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 6px 2px; }
   .car-stat-val   { font-size: 13px; font-weight: bold; }
   .car-stat-label { font-size: 8px; font-family: sans-serif; color: rgba(255,255,255,0.4); }
   .profit-line { margin-top: 8px; font-size: 11px; font-family: sans-serif; }
-
-  /* Sale item */
-  .sale-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .sale-name  { font-size: 15px; letter-spacing: 1px; }
-  .sale-meta  { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.5); margin-top: 2px; }
-  .sale-amt   { font-size: 14px; white-space: nowrap; }
-  .sale-lbl   { font-size: 10px; font-family: sans-serif; color: rgba(255,255,255,0.4); text-align: right; }
-
-  /* Mode buttons */
+  .sale-item { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.08); }
+  .sale-row  { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .sale-name { font-size: 15px; letter-spacing: 1px; }
+  .sale-meta { font-size: 11px; font-family: sans-serif; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .sale-amt  { font-size: 14px; white-space: nowrap; }
+  .sale-lbl  { font-size: 10px; font-family: sans-serif; color: rgba(255,255,255,0.4); text-align: right; }
+  .sale-btns { display: flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.07); }
+  .sale-btns .btn { margin-bottom: 0; padding: 9px; font-size: 12px; }
   .mode-block { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 14px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.1); }
   .mode-block-title { font-size: 14px; letter-spacing: 2px; margin-bottom: 8px; }
   .mode-row { display: flex; gap: 8px; }
   .mode-btn { flex: 1; padding: 10px 8px; border: none; border-radius: 10px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); font-size: 11px; font-family: sans-serif; font-weight: bold; cursor: pointer; line-height: 1.5; }
   .mode-btn.active { background: linear-gradient(90deg,#ff4e00,#ec9f05); color: #000; }
-
-  /* Price table */
   .price-table { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); margin-top: 20px; }
   .price-table-title { font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; color: #ec9f05; }
   .price-section { margin-bottom: 14px; }
@@ -128,124 +112,109 @@
   .price-cell { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 7px 4px; text-align: center; }
   .price-pct { font-size: 11px; color: #4ade80; font-family: sans-serif; font-weight: bold; }
   .price-val { font-size: 11px; font-family: sans-serif; }
-
   .empty { text-align: center; padding: 50px 0; color: rgba(255,255,255,0.3); font-family: sans-serif; font-size: 14px; line-height: 1.8; }
+  /* Overlay */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .overlay-box { background: #160d2e; border: 1px solid rgba(255,78,0,0.3); border-radius: 16px; padding: 18px; width: 100%; max-width: 360px; max-height: 90vh; overflow-y: auto; }
+  .overlay-box .modal-title { color: #60a5fa; }
+  .overlay-box.danger { border-color: rgba(248,113,113,0.4); }
+  .overlay-box.danger .modal-title { color: #f87171; }
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-left">
     <span style="font-size:26px">🚗</span>
-    <div>
-      <h1>HOT WHEELS TRACKER</h1>
-      <p>QUẢN LÝ MUA BÁN · THỐNG KÊ LỜI LỖ</p>
-    </div>
+    <div><h1>HOT WHEELS TRACKER</h1><p>QUẢN LÝ MUA BÁN · THỐNG KÊ LỜI LỖ</p></div>
   </div>
   <div class="saved-badge" id="savedBadge">💾 Đã lưu</div>
 </div>
-
 <div class="stats" id="statsBar"></div>
-
 <div class="tabs">
   <button class="tab active" onclick="switchTab('inventory')">📦 KHO</button>
   <button class="tab" onclick="switchTab('sales')">💰 BÁN</button>
   <button class="tab" onclick="switchTab('add')">➕ NHẬP</button>
 </div>
-
 <div class="content" id="content"></div>
+<div id="overlayRoot"></div>
 
 <script>
 const DEFAULT_PRICE = 69000;
 const SERIES = ["Mainline","Premium","Super Treasure Hunt","Treasure Hunt","Car Culture","Khác"];
-
 let cars  = JSON.parse(localStorage.getItem('hw_cars')  || '[]');
 let sales = JSON.parse(localStorage.getItem('hw_sales') || '[]');
-let currentTab = 'inventory';
-let batchMode  = false;
+let currentTab = 'inventory', batchMode = false;
 
 function fmt(n) { return Number(n).toLocaleString('vi-VN') + 'đ'; }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function persist() {
-  localStorage.setItem('hw_cars',  JSON.stringify(cars));
+  localStorage.setItem('hw_cars', JSON.stringify(cars));
   localStorage.setItem('hw_sales', JSON.stringify(sales));
   const b = document.getElementById('savedBadge');
-  b.classList.add('show');
-  clearTimeout(b._t);
+  b.classList.add('show'); clearTimeout(b._t);
   b._t = setTimeout(() => b.classList.remove('show'), 1500);
 }
 
-// ── Computed ──────────────────────────────────────────────────
 function getInventory() {
   const map = {};
   cars.forEach(c => { map[c.id] = {...c, sold:0, revenue:0}; });
-  sales.forEach(s => {
-    if (map[s.carId]) { map[s.carId].sold += s.qty; map[s.carId].revenue += s.qty * s.pricePerUnit; }
-  });
-  return Object.values(map).map(c => ({
-    ...c,
-    remaining: c.qty - c.sold,
-    cost: c.qty * c.costPerUnit,
-    profit: c.revenue - c.sold * c.costPerUnit,
-  }));
+  sales.forEach(s => { if (map[s.carId]) { map[s.carId].sold += s.qty; map[s.carId].revenue += s.qty * s.pricePerUnit; } });
+  return Object.values(map).map(c => ({...c, remaining: c.qty-c.sold, cost: c.qty*c.costPerUnit, profit: c.revenue - c.sold*c.costPerUnit}));
 }
 
 function getStats() {
   const inv = getInventory();
-  return {
-    totalCars:   inv.reduce((a,c)=>a+c.qty,0),
-    totalSold:   inv.reduce((a,c)=>a+c.sold,0),
-    totalCost:   inv.reduce((a,c)=>a+c.cost,0),
-    totalProfit: inv.reduce((a,c)=>a+c.profit,0),
-  };
+  return { totalCars: inv.reduce((a,c)=>a+c.qty,0), totalSold: inv.reduce((a,c)=>a+c.sold,0), totalCost: inv.reduce((a,c)=>a+c.cost,0), totalProfit: inv.reduce((a,c)=>a+c.profit,0) };
 }
 
-// ── Stats bar ─────────────────────────────────────────────────
 function renderStats() {
-  const s = getStats();
-  const ip = s.totalProfit >= 0;
+  const s = getStats(), ip = s.totalProfit >= 0;
   document.getElementById('statsBar').innerHTML = `
     <div class="stat"><div class="stat-icon">📦</div><div class="stat-val">${s.totalCars}</div><div class="stat-label">TỔNG XE</div></div>
     <div class="stat"><div class="stat-icon">✅</div><div class="stat-val">${s.totalSold}</div><div class="stat-label">ĐÃ BÁN</div></div>
-    <div class="stat"><div class="stat-icon">💸</div><div class="stat-val small">${fmt(s.totalCost)}</div><div class="stat-label">VỐN BỎ RA</div></div>
+    <div class="stat"><div class="stat-icon">💸</div><div class="stat-val small">${fmt(s.totalCost)}</div><div class="stat-label">VỐN</div></div>
     <div class="stat ${ip?'profit':'loss'}"><div class="stat-icon">${ip?'📈':'📉'}</div><div class="stat-val small ${ip?'green':'red'}">${fmt(Math.abs(s.totalProfit))}</div><div class="stat-label">${ip?'LỜI':'LỖ'}</div></div>`;
 }
 
-// ── Tabs ──────────────────────────────────────────────────────
 function switchTab(tab) {
   currentTab = tab;
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    t.classList.toggle('active', ['inventory','sales','add'][i] === tab);
-  });
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['inventory','sales','add'][i]===tab));
   render();
 }
 
-function render() {
-  renderStats();
-  if      (currentTab === 'inventory') renderInventory();
-  else if (currentTab === 'sales')     renderSales();
-  else                                  renderAdd();
-}
+function render() { renderStats(); if (currentTab==='inventory') renderInventory(); else if (currentTab==='sales') renderSales(); else renderAdd(); }
 
-// ── Inventory tab ─────────────────────────────────────────────
+// ── Overlay helpers ───────────────────────────────────────────
+function showOverlay(html) { document.getElementById('overlayRoot').innerHTML = `<div class="overlay" id="overlayBg">${html}</div>`; document.getElementById('overlayBg').onclick = e => { if (e.target.id==='overlayBg') closeOverlay(); }; }
+function closeOverlay() { document.getElementById('overlayRoot').innerHTML = ''; }
+
+function showConfirm(title, msg, onYes) {
+  showOverlay(`<div class="overlay-box danger" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">⚠️ ${title}</span></div>
+    <p style="font-family:sans-serif;font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:18px;line-height:1.6">${msg}</p>
+    <div class="btn-row"><button class="btn btn-red" onclick="overlayConfirmYes()">XÓA</button><button class="btn btn-ghost" onclick="closeOverlay()">HỦY</button></div>
+  </div>`);
+  window._overlayYesCb = onYes;
+}
+function overlayConfirmYes() { closeOverlay(); if (window._overlayYesCb) window._overlayYesCb(); }
+
+// ── INVENTORY ─────────────────────────────────────────────────
 function renderInventory() {
   const inv = getInventory();
-  if (!inv.length) {
-    document.getElementById('content').innerHTML = '<div class="empty">🚗<br>Chưa có xe nào.<br>Vào tab ➕ NHẬP để thêm!</div>';
-    return;
-  }
+  if (!inv.length) { document.getElementById('content').innerHTML = '<div class="empty">🚗<br>Chưa có xe nào.<br>Vào tab ➕ NHẬP để thêm!</div>'; return; }
   document.getElementById('content').innerHTML = inv.map(car => {
-    const pct     = car.qty > 0 ? (car.sold/car.qty)*100 : 0;
-    const profPct = car.sold > 0 ? Math.round((car.profit/(car.sold*car.costPerUnit))*100) : null;
-    return `
-    <div class="car-card">
+    const pct = car.qty > 0 ? (car.sold/car.qty)*100 : 0;
+    const pp  = car.sold > 0 ? Math.round((car.profit/(car.sold*car.costPerUnit))*100) : null;
+    return `<div class="car-card">
       <div class="car-progress" style="width:${pct}%"></div>
       <div class="car-top">
-        <div style="flex:1;margin-right:8px">
-          <div class="car-name">${esc(car.name)}</div>
-          <div class="car-meta">${esc(car.series)} · ${car.addedAt} · vốn ${fmt(car.costPerUnit)}/con</div>
+        <div style="flex:1;min-width:0"><div class="car-name">${esc(car.name)}</div><div class="car-meta">${esc(car.series)} · ${car.addedAt} · vốn ${fmt(car.costPerUnit)}/con</div></div>
+        <div class="car-actions">
+          ${car.remaining>0?`<button class="sell-btn" onclick="openSellModal('${car.id}')">BÁN</button>`:''}
+          <button class="icon-btn edit-btn" onclick="openEditCar('${car.id}')">✏️</button>
+          <button class="icon-btn del-btn"  onclick="doDeleteCar('${car.id}')">🗑️</button>
         </div>
-        ${car.remaining > 0 ? `<button class="sell-btn" onclick="openSellModal('${car.id}')">BÁN</button>` : ''}
       </div>
       <div class="car-stats">
         <div class="car-stat"><div class="car-stat-val">${car.qty}</div><div class="car-stat-label">NHẬP</div></div>
@@ -253,217 +222,191 @@ function renderInventory() {
         <div class="car-stat"><div class="car-stat-val">${car.sold}</div><div class="car-stat-label">ĐÃ BÁN</div></div>
         <div class="car-stat"><div class="car-stat-val" style="color:${car.profit>=0?'#4ade80':'#f87171'};font-size:11px">${fmt(car.profit)}</div><div class="car-stat-label">LỜI/LỖ</div></div>
       </div>
-      ${profPct !== null ? `<div class="profit-line" style="color:${profPct>=0?'#4ade80':'#f87171'}">${profPct>=0?'📈':'📉'} Biên lợi nhuận: ${profPct>=0?'+':''}${profPct}%${car.remaining>0?` <span style="color:rgba(255,255,255,0.4)">· ${car.remaining} con chưa bán</span>`:''}</div>` : ''}
+      ${pp!==null?`<div class="profit-line" style="color:${pp>=0?'#4ade80':'#f87171'}">${pp>=0?'📈':'📉'} Biên lợi nhuận: ${pp>=0?'+':''}${pp}%${car.remaining>0?` <span style="color:rgba(255,255,255,0.4)">· ${car.remaining} chưa bán</span>`:''}</div>`:''}
     </div>`;
   }).join('');
 }
 
-// ── Sales tab ─────────────────────────────────────────────────
+function openEditCar(id) {
+  const car = cars.find(c => c.id===id); if (!car) return;
+  const opts = SERIES.map(s=>`<option ${s===car.series?'selected':''}>${esc(s)}</option>`).join('');
+  showOverlay(`<div class="overlay-box" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">✏️ SỬA XE</span><button class="modal-close" onclick="closeOverlay()">✕</button></div>
+    <label>Tên xe</label><input id="ecName" value="${esc(car.name)}" autocomplete="off">
+    <label>Dòng xe</label><select id="ecSeries">${opts}</select>
+    <label>Số lượng nhập</label><input type="number" id="ecQty" value="${car.qty}" min="1" inputmode="numeric">
+    <label>Giá vốn/con (đ)</label><input type="number" id="ecCost" value="${car.costPerUnit}" inputmode="numeric">
+    <label>Ghi chú</label><input id="ecNote" value="${esc(car.note||'')}" autocomplete="off">
+    <div class="btn-row" style="margin-top:12px">
+      <button class="btn btn-blue" onclick="confirmEditCar('${id}')">LƯU THAY ĐỔI</button>
+      <button class="btn btn-ghost" onclick="closeOverlay()">HỦY</button>
+    </div>
+  </div>`);
+}
+
+function confirmEditCar(id) {
+  const idx = cars.findIndex(c=>c.id===id); if (idx<0) return;
+  const newQty = Number(document.getElementById('ecQty').value)||1;
+  const sold   = sales.filter(s=>s.carId===id).reduce((a,s)=>a+s.qty,0);
+  if (newQty < sold) { alert(`Số lượng phải ≥ ${sold} (đã bán ${sold} con)`); return; }
+  cars[idx] = { ...cars[idx], name: document.getElementById('ecName').value.trim()||cars[idx].name, series: document.getElementById('ecSeries').value, qty: newQty, costPerUnit: Number(document.getElementById('ecCost').value)||cars[idx].costPerUnit, note: document.getElementById('ecNote').value.trim() };
+  persist(); closeOverlay(); render();
+}
+
+function doDeleteCar(id) {
+  const car = cars.find(c=>c.id===id);
+  const soldCnt = sales.filter(s=>s.carId===id).reduce((a,s)=>a+s.qty,0);
+  showConfirm('XÓA XE', soldCnt>0 ? `Xóa "<b>${esc(car.name)}</b>" sẽ xóa luôn <b>${soldCnt}</b> giao dịch liên quan!` : `Xóa xe "<b>${esc(car.name)}</b>" khỏi kho?`, () => {
+    cars = cars.filter(c=>c.id!==id); sales = sales.filter(s=>s.carId!==id); persist(); render();
+  });
+}
+
+// ── SALES ─────────────────────────────────────────────────────
 function renderSales() {
-  const salesHtml = !sales.length ? '<div class="empty">💰<br>Chưa có giao dịch nào.</div>' :
+  const list = !sales.length ? '<div class="empty">💰<br>Chưa có giao dịch nào.</div>' :
     [...sales].reverse().map(s => {
-      const car    = cars.find(c => c.id === s.carId);
-      const profit = (s.pricePerUnit - (car?.costPerUnit || DEFAULT_PRICE)) * s.qty;
-      return `
-      <div class="sale-item">
-        <div style="flex:1;min-width:0">
-          <div class="sale-name">${esc(car?.name||'?')}</div>
-          <div class="sale-meta">${s.soldAt} · x${s.qty} · ${fmt(s.pricePerUnit)}/con${s.note?' · '+esc(s.note):''}</div>
+      const car = cars.find(c=>c.id===s.carId);
+      const pf  = (s.pricePerUnit-(car?.costPerUnit||DEFAULT_PRICE))*s.qty;
+      return `<div class="sale-item">
+        <div class="sale-row">
+          <div style="flex:1;min-width:0"><div class="sale-name">${esc(car?.name||'?')}</div><div class="sale-meta">${s.soldAt} · x${s.qty} · ${fmt(s.pricePerUnit)}/con${s.note?' · '+esc(s.note):''}</div></div>
+          <div><div class="sale-amt" style="color:${pf>=0?'#4ade80':'#f87171'}">${pf>=0?'+':''}${fmt(pf)}</div><div class="sale-lbl">lời/lỗ</div></div>
         </div>
-        <div>
-          <div class="sale-amt" style="color:${profit>=0?'#4ade80':'#f87171'}">${profit>=0?'+':''}${fmt(profit)}</div>
-          <div class="sale-lbl">lời/lỗ</div>
+        <div class="sale-btns">
+          <button class="btn btn-blue" onclick="openEditSale('${s.id}')">✏️ SỬA</button>
+          <button class="btn btn-red"  onclick="doDeleteSale('${s.id}')">🗑️ XÓA</button>
         </div>
       </div>`;
     }).join('');
-
-  document.getElementById('content').innerHTML =
-    `<button class="btn btn-orange" onclick="openSellModal()">+ GHI NHẬN BÁN MỚI</button>
-     <div id="sellModal"></div>
-     ${salesHtml}`;
+  document.getElementById('content').innerHTML = `<button class="btn btn-orange" onclick="openSellModal()">+ GHI NHẬN BÁN MỚI</button><div id="sellModal"></div>${list}`;
 }
 
-let _sellCarId = '';
+function openEditSale(id) {
+  const sale = sales.find(s=>s.id===id); if (!sale) return;
+  const car  = cars.find(c=>c.id===sale.carId);
+  showOverlay(`<div class="overlay-box" onclick="event.stopPropagation()">
+    <div class="modal-header"><span class="modal-title">✏️ SỬA GIAO DỊCH</span><button class="modal-close" onclick="closeOverlay()">✕</button></div>
+    <div class="hint hint-orange" style="margin-bottom:12px">🚗 ${esc(car?.name||'?')}</div>
+    <label>Số lượng</label><input type="number" id="esQty" value="${sale.qty}" min="1" inputmode="numeric">
+    <label>Giá bán/con (đ)</label><input type="number" id="esPrice" value="${sale.pricePerUnit}" inputmode="numeric">
+    <label>Kênh bán</label><input id="esNote" value="${esc(sale.note||'')}" placeholder="Facebook, Shopee..." autocomplete="off">
+    <div class="btn-row" style="margin-top:12px">
+      <button class="btn btn-blue" onclick="confirmEditSale('${id}')">LƯU THAY ĐỔI</button>
+      <button class="btn btn-ghost" onclick="closeOverlay()">HỦY</button>
+    </div>
+  </div>`);
+}
 
+function confirmEditSale(id) {
+  const idx = sales.findIndex(s=>s.id===id); if (idx<0) return;
+  const newQty    = Number(document.getElementById('esQty').value)||1;
+  const carId     = sales[idx].carId;
+  const car       = cars.find(c=>c.id===carId);
+  const otherSold = sales.filter(s=>s.carId===carId&&s.id!==id).reduce((a,s)=>a+s.qty,0);
+  if (car && otherSold+newQty > car.qty) { alert(`Không đủ hàng! Kho ${car.qty}, đã bán ${otherSold} con khác.`); return; }
+  sales[idx] = { ...sales[idx], qty: newQty, pricePerUnit: Number(document.getElementById('esPrice').value)||sales[idx].pricePerUnit, note: document.getElementById('esNote').value.trim() };
+  persist(); closeOverlay(); render();
+}
+
+function doDeleteSale(id) {
+  const sale = sales.find(s=>s.id===id);
+  const car  = cars.find(c=>c.id===sale?.carId);
+  showConfirm('XÓA GIAO DỊCH', `Xóa giao dịch bán "<b>${esc(car?.name||'?')}</b>" ngày ${sale?.soldAt}?`, () => {
+    sales = sales.filter(s=>s.id!==id); persist(); render();
+  });
+}
+
+// ── SELL MODAL ────────────────────────────────────────────────
+let _sid = '';
 function openSellModal(carId) {
-  _sellCarId = carId || '';
-  if (currentTab !== 'sales') { switchTab('sales'); setTimeout(() => openSellModal(carId), 60); return; }
-
-  const inv  = getInventory();
-  const avail = inv.filter(c => c.remaining > 0);
-  const opts  = avail.map(c =>
-    `<option value="${c.id}" ${c.id===_sellCarId?'selected':''}>${esc(c.name)} (${esc(c.series)}) — còn ${c.remaining}</option>`
-  ).join('');
-
-  document.getElementById('sellModal').innerHTML = `
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">GHI NHẬN BÁN XE</span>
-        <button class="modal-close" onclick="closeSellModal()">✕</button>
-      </div>
-      <label>Chọn xe *</label>
-      <select id="sCarId" onchange="onSellCarChange()">
-        <option value="">-- Chọn xe --</option>${opts}
-      </select>
-      <div id="sellHint"></div>
-      <label>Số lượng</label>
-      <input type="number" id="sQty" value="1" min="1" inputmode="numeric">
-      <label>Giá bán mỗi con (đ) *</label>
-      <input type="number" id="sPrice" placeholder="VD: 120000" inputmode="numeric" oninput="onSellPriceChange()">
-      <div id="profitHint"></div>
-      <label>Kênh bán</label>
-      <input type="text" id="sNote" placeholder="Facebook, Shopee, Zalo...">
-      <div class="btn-row">
-        <button class="btn btn-green" onclick="confirmSale()">XÁC NHẬN BÁN</button>
-        <button class="btn btn-ghost" onclick="closeSellModal()">HỦY</button>
-      </div>
-    </div>`;
-
-  if (_sellCarId) onSellCarChange();
+  _sid = carId||'';
+  if (currentTab!=='sales') { switchTab('sales'); setTimeout(()=>openSellModal(carId),60); return; }
+  const inv   = getInventory(), avail = inv.filter(c=>c.remaining>0);
+  const opts  = avail.map(c=>`<option value="${c.id}" ${c.id===_sid?'selected':''}>${esc(c.name)} (${esc(c.series)}) — còn ${c.remaining}</option>`).join('');
+  document.getElementById('sellModal').innerHTML = `<div class="modal">
+    <div class="modal-header"><span class="modal-title">GHI NHẬN BÁN XE</span><button class="modal-close" onclick="closeSellModal()">✕</button></div>
+    <label>Chọn xe *</label>
+    <select id="sCarId" onchange="onSCC()"><option value="">-- Chọn xe --</option>${opts}</select>
+    <div id="sHint"></div>
+    <label>Số lượng</label><input type="number" id="sQty" value="1" min="1" inputmode="numeric">
+    <label>Giá bán/con (đ) *</label><input type="number" id="sPrice" placeholder="VD: 120000" inputmode="numeric" oninput="onSPC()">
+    <div id="sPHint"></div>
+    <label>Kênh bán</label><input id="sNote" placeholder="Facebook, Shopee, Zalo...">
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="confirmSale()">XÁC NHẬN BÁN</button>
+      <button class="btn btn-ghost" onclick="closeSellModal()">HỦY</button>
+    </div>
+  </div>`;
+  if (_sid) onSCC();
 }
-
-function onSellCarChange() {
-  _sellCarId = document.getElementById('sCarId').value;
-  const inv = getInventory();
-  const car = inv.find(c => c.id === _sellCarId);
-  const el  = document.getElementById('sellHint');
-  if (!car) { el.innerHTML = ''; return; }
-  const sug = Math.ceil(car.costPerUnit * 1.4 / 1000) * 1000;
-  el.innerHTML = `<div class="hint hint-orange">💡 Giá vốn: ${fmt(car.costPerUnit)} · Gợi ý ≥${fmt(sug)} để lời ~40%</div>`;
-  onSellPriceChange();
+function onSCC() {
+  _sid = document.getElementById('sCarId').value;
+  const car = getInventory().find(c=>c.id===_sid);
+  document.getElementById('sHint').innerHTML = car ? `<div class="hint hint-orange">💡 Giá vốn: ${fmt(car.costPerUnit)} · Gợi ý ≥${fmt(Math.ceil(car.costPerUnit*1.4/1000)*1000)} để lời ~40%</div>` : '';
+  onSPC();
 }
-
-function onSellPriceChange() {
-  const inv   = getInventory();
-  const car   = inv.find(c => c.id === (document.getElementById('sCarId')?.value||''));
-  const price = Number(document.getElementById('sPrice')?.value||0);
-  const qty   = Number(document.getElementById('sQty')?.value||1);
-  const el    = document.getElementById('profitHint');
-  if (!car || !price) { el.innerHTML=''; return; }
-  const profit = (price - car.costPerUnit) * qty;
-  el.innerHTML = `<div class="hint ${profit>=0?'hint-green':'hint-red'}">${profit>=0?'✅':'❌'} Lời/Lỗ dự tính: ${profit>=0?'+':''}${fmt(profit)}</div>`;
+function onSPC() {
+  const car = getInventory().find(c=>c.id===(document.getElementById('sCarId')?.value||''));
+  const p = Number(document.getElementById('sPrice')?.value||0), q = Number(document.getElementById('sQty')?.value||1);
+  const el = document.getElementById('sPHint');
+  if (!car||!p) { el.innerHTML=''; return; }
+  const pf = (p-car.costPerUnit)*q;
+  el.innerHTML = `<div class="hint ${pf>=0?'hint-green':'hint-red'}">${pf>=0?'✅':'❌'} Lời/Lỗ dự tính: ${pf>=0?'+':''}${fmt(pf)}</div>`;
 }
-
-function closeSellModal() {
-  const el = document.getElementById('sellModal');
-  if (el) el.innerHTML = '';
-}
-
+function closeSellModal() { const e=document.getElementById('sellModal'); if(e) e.innerHTML=''; }
 function confirmSale() {
-  const carId = document.getElementById('sCarId').value;
-  const qty   = Number(document.getElementById('sQty').value) || 1;
-  const price = Number(document.getElementById('sPrice').value);
-  const note  = document.getElementById('sNote').value.trim();
-  if (!carId || !price) { alert('Vui lòng chọn xe và nhập giá bán!'); return; }
-  const inv = getInventory();
-  const car = inv.find(c => c.id === carId);
-  if (!car || car.remaining < qty) { alert('Không đủ hàng trong kho!'); return; }
-  sales.push({ id: Date.now().toString(), carId, qty, pricePerUnit: price, note, soldAt: new Date().toLocaleDateString('vi-VN') });
-  persist();
-  closeSellModal();
-  render();
+  const carId=document.getElementById('sCarId').value, qty=Number(document.getElementById('sQty').value)||1, price=Number(document.getElementById('sPrice').value), note=document.getElementById('sNote').value.trim();
+  if (!carId||!price) { alert('Vui lòng chọn xe và nhập giá bán!'); return; }
+  const car = getInventory().find(c=>c.id===carId);
+  if (!car||car.remaining<qty) { alert('Không đủ hàng trong kho!'); return; }
+  sales.push({id:Date.now().toString(),carId,qty,pricePerUnit:price,note,soldAt:new Date().toLocaleDateString('vi-VN')});
+  persist(); closeSellModal(); render();
 }
 
-// ── Add tab ───────────────────────────────────────────────────
+// ── ADD TAB ───────────────────────────────────────────────────
 function renderAdd() {
-  const eCost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
-  const priceSections = [
-    {label:'Lẻ siêu thị', cost:DEFAULT_PRICE},
-    {label:'Mua 5 tặng 2', cost:Math.round(DEFAULT_PRICE*5/7)},
-  ].map(row => `
-    <div class="price-section">
-      <div class="price-section-lbl">Giá vốn (${row.label}): ${fmt(row.cost)}</div>
-      <div class="price-grid">
-        ${[30,50,80,100,150,200].map(pct => {
-          const sell = Math.ceil(row.cost*(1+pct/100)/1000)*1000;
-          return `<div class="price-cell"><div class="price-pct">+${pct}%</div><div class="price-val">${fmt(sell)}</div></div>`;
-        }).join('')}
-      </div>
-    </div>`).join('');
-
+  const ps = [{label:'Lẻ siêu thị',cost:DEFAULT_PRICE},{label:'Mua 5 tặng 2',cost:Math.round(DEFAULT_PRICE*5/7)}]
+    .map(r=>`<div class="price-section"><div class="price-section-lbl">Giá vốn (${r.label}): ${fmt(r.cost)}</div><div class="price-grid">${[30,50,80,100,150,200].map(p=>{const s=Math.ceil(r.cost*(1+p/100)/1000)*1000;return`<div class="price-cell"><div class="price-pct">+${p}%</div><div class="price-val">${fmt(s)}</div></div>`;}).join('')}</div></div>`).join('');
   document.getElementById('content').innerHTML = `
     <div class="mode-block">
       <div class="mode-block-title">🏷️ CHẾ ĐỘ MUA</div>
       <div class="mode-row">
         <button class="mode-btn ${!batchMode?'active':''}" onclick="setMode(false)">1 con = ${fmt(DEFAULT_PRICE)}</button>
-        <button class="mode-btn ${batchMode?'active':''}" onclick="setMode(true)">Mua 5 tặng 2<br>≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con</button>
+        <button class="mode-btn ${batchMode?'active':''}"  onclick="setMode(true)">Mua 5 tặng 2<br>≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con</button>
       </div>
     </div>
-    <button class="btn btn-yellow" onclick="openAddCarModal()">+ THÊM XE MỚI VÀO KHO</button>
+    <button class="btn btn-yellow" onclick="openAddCar()">+ THÊM XE MỚI VÀO KHO</button>
     <div id="addCarModal"></div>
-    <div class="price-table">
-      <div class="price-table-title">📊 BẢNG GIÁ GỢI Ý BÁN</div>
-      ${priceSections}
-    </div>`;
+    <div class="price-table"><div class="price-table-title">📊 BẢNG GIÁ GỢI Ý BÁN</div>${ps}</div>`;
 }
-
-function setMode(batch) { batchMode = batch; renderAdd(); }
-
-function openAddCarModal() {
-  const eCost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
-  document.getElementById('addCarModal').innerHTML = `
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">NHẬP XE MỚI</span>
-        <button class="modal-close" onclick="closeAddCarModal()">✕</button>
-      </div>
-      <label>Tên xe *</label>
-      <input type="text" id="cName" placeholder="VD: Ferrari 250 GTO" autocomplete="off">
-      <label>Dòng xe</label>
-      <select id="cSeries">${SERIES.map(s=>`<option>${s}</option>`).join('')}</select>
-      <label>Số lượng nhập</label>
-      <input type="number" id="cQty" value="1" min="1" inputmode="numeric">
-      <label>Giá vốn mỗi con (đ)</label>
-      <input type="number" id="cCost" value="${eCost}" inputmode="numeric">
-      <div class="hint hint-orange">${batchMode
-        ? `💡 Mua 5 tặng 2: ${fmt(DEFAULT_PRICE*5)} / 7 con ≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con`
-        : `💡 Giá lẻ siêu thị: ${fmt(DEFAULT_PRICE)}/con`}
-      </div>
-      <label>Ghi chú</label>
-      <input type="text" id="cNote" placeholder="Nguồn, ngày nhập..." autocomplete="off">
-      <div class="btn-row">
-        <button class="btn btn-yellow" onclick="confirmAddCar()">LƯU VÀO KHO</button>
-        <button class="btn btn-ghost" onclick="closeAddCarModal()">HỦY</button>
-      </div>
-    </div>`;
-
-  setTimeout(() => document.getElementById('cName')?.focus(), 100);
+function setMode(b) { batchMode=b; renderAdd(); }
+function openAddCar() {
+  const ec = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
+  document.getElementById('addCarModal').innerHTML = `<div class="modal">
+    <div class="modal-header"><span class="modal-title">NHẬP XE MỚI</span><button class="modal-close" onclick="closeAddCar()">✕</button></div>
+    <label>Tên xe *</label><input id="cName" placeholder="VD: Ferrari 250 GTO" autocomplete="off">
+    <label>Dòng xe</label><select id="cSeries">${SERIES.map(s=>`<option>${esc(s)}</option>`).join('')}</select>
+    <label>Số lượng nhập</label><input type="number" id="cQty" value="1" min="1" inputmode="numeric">
+    <label>Giá vốn/con (đ)</label><input type="number" id="cCost" value="${ec}" inputmode="numeric">
+    <div class="hint hint-orange">${batchMode?`💡 Mua 5 tặng 2: ${fmt(DEFAULT_PRICE*5)} / 7 con ≈ ${fmt(Math.round(DEFAULT_PRICE*5/7))}/con`:`💡 Giá lẻ siêu thị: ${fmt(DEFAULT_PRICE)}/con`}</div>
+    <label>Ghi chú</label><input id="cNote" placeholder="Nguồn, ngày nhập..." autocomplete="off">
+    <div class="btn-row">
+      <button class="btn btn-yellow" onclick="confirmAddCar()">LƯU VÀO KHO</button>
+      <button class="btn btn-ghost"  onclick="closeAddCar()">HỦY</button>
+    </div>
+  </div>`;
+  setTimeout(()=>document.getElementById('cName')?.focus(),100);
 }
-
-function closeAddCarModal() {
-  const el = document.getElementById('addCarModal');
-  if (el) el.innerHTML = '';
-}
-
+function closeAddCar() { const e=document.getElementById('addCarModal'); if(e) e.innerHTML=''; }
 function confirmAddCar() {
-  const name = document.getElementById('cName').value.trim();
+  const name=document.getElementById('cName').value.trim();
   if (!name) { alert('Vui lòng nhập tên xe!'); return; }
-  const cost = batchMode ? Math.round(DEFAULT_PRICE*5/7) : DEFAULT_PRICE;
-  cars.push({
-    id: Date.now().toString(),
-    name,
-    series:      document.getElementById('cSeries').value,
-    qty:         Number(document.getElementById('cQty').value) || 1,
-    costPerUnit: Number(document.getElementById('cCost').value) || cost,
-    note:        document.getElementById('cNote').value.trim(),
-    addedAt:     new Date().toLocaleDateString('vi-VN'),
-  });
-  persist();
-  closeAddCarModal();
-  render();
+  const cost=batchMode?Math.round(DEFAULT_PRICE*5/7):DEFAULT_PRICE;
+  cars.push({id:Date.now().toString(),name,series:document.getElementById('cSeries').value,qty:Number(document.getElementById('cQty').value)||1,costPerUnit:Number(document.getElementById('cCost').value)||cost,note:document.getElementById('cNote').value.trim(),addedAt:new Date().toLocaleDateString('vi-VN')});
+  persist(); closeAddCar(); render();
 }
 
-// ── Utils ─────────────────────────────────────────────────────
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── Service Worker ────────────────────────────────────────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
-}
-
-// ── Init ──────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
 render();
 </script>
 </body>
